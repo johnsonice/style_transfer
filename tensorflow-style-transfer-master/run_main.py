@@ -50,8 +50,8 @@ args = {
         'style_layers':['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],
         'content_layer_weights':[1.0],
         'style_layer_weights':[.2,.2,.2,.2,.2],
-        'num_iter':500,    
-        'loss_ratio':1e-3,               ## content loss relative to style loss
+        'num_iter':300,    
+        'loss_ratio':1e-3,              ## content loss relative to style loss, in the paper, it suggets (1e-4,1e-1)
         'content_loss_norm_type': 3     ## Different types of normalization for content loss, choice [1,2,3]
         }
 
