@@ -4,6 +4,7 @@ __pycache__/
 *.mat
 *data/
 *bin/
+*model/
 
 *.py[cod]
 *$py.class
