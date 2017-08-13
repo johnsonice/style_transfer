@@ -40,3 +40,10 @@
 - `--tmp-dir`: Directory to put temporary processing files in. Will generate a dir if you do not pass it a path. Will delete tmpdir afterwards. Default: randomly generates invisible dir, then deletes it after execution completion.
 - `--device`: Device to evaluate frames with. Default: `/gpu:0`.
 - `--batch-size`: Batch size for evaluating images. Default: `4`.
+
+
+
+
+#########################
+#########################
+python evaluate.py --checkpoint model/la_muse.ckpt --in-path examples/content/ --out-path examples/results/ --allow-different-dimensions

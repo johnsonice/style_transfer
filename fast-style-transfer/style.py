@@ -1,6 +1,6 @@
 from __future__ import print_function
 import sys, os
-sys.path.insert(0, 'src')
+sys.path.insert(0, './src')
 #import numpy as np, scipy.misc 
 from optimize import optimize
 from argparse import ArgumentParser
@@ -29,17 +29,18 @@ DEVICE = '/gpu:0'
 FRAC_GPU = 1
 
 options_dict = {
-            'style': 'examples/style/udnie.jpg',
-            'checkpoint_dir': 'model',
+            'style': 'examples/style/kandinsky.jpg',
+            'checkpoint_dir': 'training_model',
+			'model_name': 'kandinsky.ckpt',
             'test': None,         # 'examples/test/stata.jpg', 
             'test_dir': None,     # 'examples/test',       
             'content_weight': 7.5e0,
             'style_weight': 1e2,
-            'checkpoint_iterations' : 2000,
-            'batch_size': 8,                    ## after these are all default options
+            'checkpoint_iterations' : 1000,
+            'batch_size': 4,                    ## after these are all default options
             'train_path': 'data/train2014',
             'slow': False,
-            'epochs':3,
+            'epochs':2,
             'vgg_path': 'data/imagenet-vgg-verydeep-19.mat',
             'tv_weight':2e2,
             'learning_rate':1e-3,
@@ -67,7 +68,7 @@ def main():
         "epochs":options.epochs,
         "print_iterations":options.checkpoint_iterations,
         "batch_size":options.batch_size,
-        "save_path":os.path.join(options.checkpoint_dir,'fns.ckpt'),
+        "save_path":os.path.join(options.checkpoint_dir,options.model_name),
         "learning_rate":options.learning_rate
     }
 
