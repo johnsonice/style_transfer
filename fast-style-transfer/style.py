@@ -27,9 +27,9 @@ class args(object):
 
 
 options_dict = {
-            'style': 'examples/style/starry-night.jpg',
+            'style': 'examples/style/udnie.jpg',
             'checkpoint_dir': 'training_model',
-			'model_name': 'starry-night.ckpt',
+			'model_name': 'udnie.ckpt',
             'test': None,         # 'examples/test/stata.jpg', 
             'test_dir': None,     # 'examples/test',       
             'content_weight': 7.0e0,  # default is 7.5
