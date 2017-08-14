@@ -141,9 +141,11 @@ def ffwd(data_in, paths_out, checkpoint_dir, device_t='/gpu:0', batch_size=4):
     with g.as_default(), g.device(device_t), \
             tf.Session(config=soft_config) as sess:
         batch_shape = (batch_size,) + img_shape
-        img_placeholder = tf.placeholder(tf.float32, shape=batch_shape,
+#        img_placeholder = tf.placeholder(tf.float32, shape=batch_shape,
+#                                         name='img_placeholder')
+        img_placeholder = tf.placeholder(tf.float32, shape=[None,None,None,3],
                                          name='img_placeholder')
-
+        
         preds = transform.net(img_placeholder)
         saver = tf.train.Saver()
         if os.path.isdir(checkpoint_dir):

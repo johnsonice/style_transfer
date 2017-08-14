@@ -25,18 +25,16 @@ class args(object):
 #parser = build_parser()
 #options_dict = vars(parser.parse_args())
 
-DEVICE = '/gpu:0'
-FRAC_GPU = 1
 
 options_dict = {
-            'style': 'examples/style/kandinsky.jpg',
+            'style': 'examples/style/starry-night.jpg',
             'checkpoint_dir': 'training_model',
-			'model_name': 'kandinsky.ckpt',
+			'model_name': 'starry-night.ckpt',
             'test': None,         # 'examples/test/stata.jpg', 
             'test_dir': None,     # 'examples/test',       
-            'content_weight': 7.5e0,
+            'content_weight': 7.0e0,  # default is 7.5
             'style_weight': 1e2,
-            'checkpoint_iterations' : 1000,
+            'checkpoint_iterations' : 2000,
             'batch_size': 4,                    ## after these are all default options
             'train_path': 'data/train2014',
             'slow': False,
@@ -58,10 +56,8 @@ def main():
 #    check_opts(options)
 
     style_target = get_img(options.style)
-    if not options.slow:
-        content_targets = _get_files(options.train_path)
-    elif options.test:
-        content_targets = [options.test]
+    content_targets = _get_files(options.train_path)
+
 
     kwargs = {
         "slow":options.slow,
@@ -71,12 +67,6 @@ def main():
         "save_path":os.path.join(options.checkpoint_dir,options.model_name),
         "learning_rate":options.learning_rate
     }
-
-    if options.slow:
-        if options.epochs < 10:
-            kwargs['epochs'] = 1000
-        if options.learning_rate < 1:
-            kwargs['learning_rate'] = 1e1
 
     args = [
         content_targets,
@@ -93,15 +83,7 @@ def main():
         print('Epoch %d, Iteration: %d, Loss: %s' % (epoch, i, loss))
         to_print = (style_loss, content_loss, tv_loss)
         print('style: %s, content:%s, tv: %s' % to_print)
-        if options.test:
-            assert options.test_dir != False
-            preds_path = '%s/%s_%s.png' % (options.test_dir,epoch,i)
-            if not options.slow:
-                ckpt_dir = os.path.dirname(options.checkpoint_dir)
-                evaluate.ffwd_to_img(options.test,preds_path,
-                                     options.checkpoint_dir)
-            else:
-                save_img(preds_path, img)
+
     ckpt_dir = options.checkpoint_dir
     cmd_text = 'python evaluate.py --checkpoint %s ...' % ckpt_dir
     print("Training complete. For evaluation:\n    `%s`" % cmd_text)

@@ -47,3 +47,5 @@
 #########################
 #########################
 python evaluate.py --checkpoint model/la_muse.ckpt --in-path examples/content/ --out-path examples/results/ --allow-different-dimensions
+
+python evaluate.py --checkpoint model/kandinsky.ckpt --in-path examples/content/ --out-path examples/results/ --allow-different-dimensions
