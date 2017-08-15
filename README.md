@@ -1,19 +1,24 @@
 # style_transfer
 all different ways of style transfer
 
+
+#### style_net borrowed a lot code from https://github.com/lengstrom/fast-style-transfer
+
 ### high level api
 
 ```
-from style_net import evaluate
-import scipy.misc
+from style_net import inference
+import matplotlib.pyplot as plt
 
-options = {'checkpoint_dir': 'style_net/training_model',
-         'device': '/gpu:0',
-         'in_path': 'style_net/examples/content/chicago.jpg'}
+options = {'checkpoint': 'style_net/training_model',
+         'device': '/gpu:0'
+         }
 
-sess,in_node,out_node = evaluate.load(options)
-results = evaluate.predict(sess,in_node,out_node,options)
+img = 'style_net/examples/content/chicago.jpg'
+net = inference.net(options)
 
-scipy.misc.imshow(results)
+result = net.predict(img)
+plt.imshow(result)
+net.save('test.jpg',result)
 ```
 
