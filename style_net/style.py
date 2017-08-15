@@ -50,7 +50,7 @@ options = args(options_dict)
 
 #%%
     
-def main():
+def main(options):
 #    parser = build_parser()
 #    options = parser.parse_args()
 #    check_opts(options)
@@ -89,4 +89,4 @@ def main():
     print("Training complete. For evaluation:\n    `%s`" % cmd_text)
 
 if __name__ == '__main__':
-    main()
+    main(options)
