@@ -55,8 +55,9 @@ class net(object):
     def save(self,out_path,img):
         scipy.misc.imsave(out_path, img)
         return None
+
+def check_dir(path):
+    return None
+def check_ckpt(file_path):
     
-#%%
-def check_opts(opts):
-    exists(opts.checkpoint_dir, 'Checkpoint not found!')
-    exists(opts.in_path, 'In path not found!')
+    return None
