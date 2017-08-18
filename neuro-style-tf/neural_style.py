@@ -4,7 +4,7 @@ import time
 import cv2
 import os
 
-from .src.util import maybe_make_directory,write_image,write_video_output,read_image,check_image
+from .src.util import maybe_make_directory,write_image,write_video_output,read_image,check_image,preprocess
 from .src.vgg19 import build_model
 
 '''
