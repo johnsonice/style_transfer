@@ -39,8 +39,11 @@ class net(object):
                 else:
                     raise Exception("No checkpoint found...")
             else:
-                saver.restore(sess, model)
-        
+                if check_file(model+'.index'):
+                    saver.restore(sess, model)
+                else:
+                    raise Exception("No checkpoint found...")
+                    
         in_node = sess.graph.get_tensor_by_name('img_placeholder:0')
         out_node = sess.graph.get_tensor_by_name('add_37:0')
         return sess,in_node,out_node
@@ -56,8 +59,5 @@ class net(object):
         scipy.misc.imsave(out_path, img)
         return None
 
-def check_dir(path):
-    return None
-def check_ckpt(file_path):
-    
-    return None
+def check_file(file_path):
+    return os.path.isfile(file_path)

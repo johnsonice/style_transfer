@@ -4,6 +4,16 @@ all different ways of style transfer
 
 #### style_net borrowed a lot code from https://github.com/lengstrom/fast-style-transfer
 
+
+### download pretrained models 
+```
+##down load model ckpt files into model folder 
+cd style_net/model 
+wget https://www.dropbox.com/s/one2ibrtro7tiuv/style_model.tar.gz
+tar -xzf style_model.tar.gz
+rm style_model.tar.gz
+```
+
 ### high level api
 
 ```

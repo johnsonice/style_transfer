@@ -10,17 +10,17 @@ import matplotlib.pyplot as plt
 #import numpy as np
 #%matplotlib inline
 
+
 ################
 ### inference ##
 ################
 
-options = {'checkpoint': 'style_net/training_model',
+options = {'checkpoint': 'style_net/model/seated-nude.ckpt',
          'device': '/gpu:0'
          }
-#%%
-img = 'style_net/examples/content/chicago.jpg'
 net = inference.net(options)
 #%%
+img = 'style_net/examples/content/content6.jpg'
 result = net.predict(img)
 plt.imshow(result)
 net.save('test.jpg',result)
