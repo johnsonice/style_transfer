@@ -4,7 +4,7 @@ import time
 import cv2
 import os
 
-from .src.util import maybe_make_directory,write_image,write_video_output,read_image,check_image,preprocess
+from .src.util import maybe_make_directory,write_image,write_video_output,read_image,check_image,preprocess,postprocess,read_flow_file,read_weights_file
 from .src.vgg19 import build_model
 
 '''
@@ -390,11 +390,59 @@ def render_video():
         tock = time.time()
         print('Frame {} elapsed time: {}'.format(frame, tock - tick))
 
+class args_obj(object):
+    """
+    turn dictionary into objects 
+    """
+    def __init__(self,dictionary):
+        for key,val in dictionary.items():
+            setattr(self,key,val)
+
+def default_args():
+    arg={
+            'verbose':True,
+            'model_weights':'imagenet-vgg-verydeep-19.mat',
+            'image_name':'testing.jpg',
+            'style_imgs':'style.jpg',
+            'img_output_dir':'./image_output',
+            'style_imgs_weights':[1.0],
+            'content_img':'testing1.jpg',
+            'style_imgs_dir':'./styles',
+            'content_img_dir':'./image_input',  ## default
+            'init_img_tyle':'content',          ## default 
+            'max_size':512,                   ## default is 512 
+            'content_weight':5e0,               ## default
+            'style_weight':1e4,                 ## default 
+            'tv_weight':1e-3,                   ## default
+            'content_loss_function':1,          ## choice 1, 2, 3
+            'content_layers':['conv4_2'],       ## default
+            'style_layers': ['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],   ## default
+            'content_layer_weight':[1.0],       ## default
+            'style_layer_weights':[0.2,0.2,0.2,0.2,0.2],        ## default 
+            'original_colors':False,            ## True or False, if keep original color
+            'color_convert_tyle': 'yuv',        ## choice ['yuv', 'ycrcb', 'luv', 'lab'] Color space for conversion to original colors
+            'color_convert_time':'after',       ## before or after
+            'noise_ratio':1.0,                  ## default: "Interpolation value between the content image and noise image if the network is initialized with 'random'.")
+            'seed':0,                           ## default 
+            'pooling_tyle':'avg',               ## max pooling or avg pooling 
+            'device':'/gpu:0',                  ## or '/cpu:0'
+            'optimizer': 'lbfgs',               ## or adam 
+            'learning_rate':1e0,                ## default learning rate for adam 
+            'max_iterations':1000,              ## default 
+            'print_iterations': 50,             
+            }
+    arg = args_obj(args)
+      
+    return arg 
+#%%
 def main():
   global args
-  args = parse_args()
-  if args.video: render_video()
-  else: render_single_image()
+  args = default_args()
+  #render_single_image()
 
 if __name__ == '__main__':
   main()
+  
+#%%
+
+
