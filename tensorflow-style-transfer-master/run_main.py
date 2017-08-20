@@ -40,18 +40,18 @@ def parse_args():
 #    exit()
 
 args = {
-        'content': 'images/content2.jpg',
-        'style': 'images/style6.jpg',
+        'content': 'images/content7.jpg',
+        'style': 'images/comic_village.jpg',
         'output': 'result.jpg',
         'model_path': 'pre_trained_model',
         'max_size':None,
-        'initial_type': 'content',
-        'content_layers':['conv3_2'],
+        'initial_type': 'content', ##style, random 
+        'content_layers':['conv4_2'],
         'style_layers':['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],
         'content_layer_weights':[1.0],
         'style_layer_weights':[.2,.2,.2,.2,.2],
-        'num_iter':200,    
-        'loss_ratio':1e-3,              ## content loss relative to style loss, in the paper, it suggets (1e-4,1e-1)
+        'num_iter':300,    
+        'loss_ratio':8e-2,              ## content loss relative to style loss, in the paper, it suggets (1e-4,1e-1)
         'content_loss_norm_type': 3     ## Different types of normalization for content loss, choice [1,2,3]
         }
 
