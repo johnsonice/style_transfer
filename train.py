@@ -27,7 +27,7 @@ options_dict = {
             'model_name': 'udnie.ckpt',
             'test': None,         # 'examples/test/stata.jpg', 
             'test_dir': None,     # 'examples/test',       
-            'content_weight': 7.0e0,  # default is 7.5
+            'content_weight': 7.5e0,  # default is 7.5
             'style_weight': 1e2,
             'checkpoint_iterations' : 2000,
             'batch_size': 4,                    ## after these are all default options
@@ -43,7 +43,8 @@ options_dict = {
 options = args(options_dict)
 
 #%%
-styles = ['kandinsky','seated-nude','seated-nude','shipwreck','the_scream','wave','woman-with-hat-matisse']
+styles = ['hayao_miyazaki_totoro','transverse_line','robotech','super_saiyan','western_dream',
+'sketch','woman-with-hat-matisse']
 
 for s in styles:
     options.style = 'style_net/examples/style/' + s + '.jpg'
