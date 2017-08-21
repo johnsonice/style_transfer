@@ -16,7 +16,7 @@ class default_args(object):
 
 args = default_args()
 
-
+#### args is a global variable 
 def build_model(input_img):
   if args.verbose: print('\nBUILDING VGG-19 NETWORK')
   net = {}
