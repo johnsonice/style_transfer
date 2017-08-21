@@ -17,9 +17,9 @@ rm style_model.tar.gz
 #### Some results 
 <p align = 'center'>
 
-<img src="result_samples/2.jpg" height=400>
-<img src="result_samples/2_tl.jpg" height=400>
-<img src="result_samples/2_wave.jpg" height=400>
+<img src="result_samples/2.jpg" height=150>
+<img src="result_samples/2_tl.jpg" height=150>
+<img src="result_samples/2_wave.jpg" height=150>
 </p>
 
 ### high level api
