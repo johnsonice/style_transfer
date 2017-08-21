@@ -16,8 +16,9 @@ import os
 ### inference ##
 ################
 
-options = {'checkpoint': 'style_net/training_model/western_dream.ckpt',
-         'device': '/cpu:0'
+options = {'checkpoint': 'style_net/training_model/starry-night.ckpt',
+         'device': '/cpu:0',
+         'max_size': 1080
          }
 net = inference.net(options)
 #%%
@@ -27,7 +28,7 @@ imgs = [f for f in os.listdir(imgs_path)]
 
 #img = 'style_net/examples/content/content6.jpg'
 for f in imgs:
-    result = net.predict(os.path.join(imgs_path,f))
+    result = net.predict(os.path.join(imgs_path,f),options['max_size'])
     #plt.imshow(result)
     net.save(os.path.join(out_path,f),result)
 

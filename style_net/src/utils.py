@@ -9,8 +9,18 @@ def scale_img(style_path, style_scale):
     o0, o1, o2 = scipy.misc.imread(style_path, mode='RGB').shape
     scale = float(style_scale)
     new_shape = (int(o0 * scale), int(o1 * scale), o2)
-    style_target = _get_img(style_path, img_size=new_shape)
+    style_target = get_img(style_path, img_size=new_shape)
     return style_target
+
+def down_size_img(nd_img,scale):
+    scale = float(scale)
+    h,w,d = nd_img.shape
+    new_shape = (int(h*scale),int(w*scale),d)
+    img_out = scipy.misc.imresize(nd_img,new_shape)
+    return img_out
+    
+def scale_back_img(nd_img,img_shape):
+    return scipy.misc.imresize(nd_img,img_shape)
 
 def get_img(src, img_size=False):
    img = scipy.misc.imread(src, mode='RGB') # misc.imresize(, (256, 256, 3))

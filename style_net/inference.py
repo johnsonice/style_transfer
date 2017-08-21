@@ -6,7 +6,7 @@ import transform, numpy as np
 import scipy.misc
 
 import tensorflow as tf
-from utils import get_img, exists #, list_files ,save_img
+from utils import get_img, exists,down_size_img #, list_files ,save_img
 
 class net(object):
     def __init__(self,options):
@@ -27,6 +27,7 @@ class net(object):
         sess = tf.Session(graph = g, config=soft_config)
         
         with g.as_default(), g.device(device_t):
+            #tf.reset_default_graph()
             img_placeholder = tf.placeholder(tf.float32, shape=[None,None,None,3],
                                              name='img_placeholder')
             preds = transform.net(img_placeholder)
@@ -48,11 +49,27 @@ class net(object):
         out_node = sess.graph.get_tensor_by_name('add_37:0')
         return sess,in_node,out_node
 
-    def predict(self,img):
+    def predict(self,img,mx):
+        ## read image into nd array
         if type(img) != np.ndarray: img = get_img(img)
+        ## if image it too big, rescale it 
+        h,w,d = img.shape
+        scale = 1.0
+        if h > w and h > mx:
+            scale = mx/h
+            img = down_size_img(img,scale)
+        if w > mx:
+            scale = mx/w
+            img = down_size_img(img,scale)
+        
         img = np.expand_dims(img,0)
         _preds = self.sess.run(self.out_node, feed_dict={self.in_node:img})
         _preds = np.clip(_preds.squeeze(),0,255).astype(np.uint8)
+        
+        ## scale the image back to original size if needed
+        if scale != 1.0:
+            _preds = scipy.misc.imresize(_preds,(h,w,d))
+    
         return _preds
     
     def save(self,out_path,img):
