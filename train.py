@@ -27,7 +27,7 @@ options_dict = {
             'model_name': 'udnie.ckpt',
             'test': None,         # 'examples/test/stata.jpg', 
             'test_dir': None,     # 'examples/test',       
-            'content_weight': 20e0,  # default is 7.5
+            'content_weight': 8e0,  # default is 7.5
             'style_weight': 1e2,
             'checkpoint_iterations' : 2000,
             'batch_size': 4,                    ## after these are all default options
@@ -43,11 +43,11 @@ options_dict = {
 options = args(options_dict)
 
 #%%
-styles = ['hayao_miyazaki_totoro','transverse_line','robotech','super_saiyan','western_dream',
-'sketch','woman-with-hat-matisse']
-weights = [8e0]
-## need to ge further trained ['transverse_line','robotech']
-## weights = [8e0,15e0,30e0]
+#styles = ['hayao_miyazaki_totoro','transverse_line','robotech','super_saiyan','western_dream',
+#'sketch','woman-with-hat-matisse']
+#weights = [8e0]
+styles = ['transverse_line','daryl_feril','slam_dunk','robotech']
+weights = [15e0,30e0]
 for s in styles:
     for w in weights:
         options.style = 'style_net/examples/style/' + s + '.jpg'
