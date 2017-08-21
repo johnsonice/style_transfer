@@ -16,7 +16,7 @@ import os
 ### inference ##
 ################
 
-options = {'checkpoint': 'style_net/training_model/super_saiyan.ckpt',
+options = {'checkpoint': 'style_net/model/wave.ckpt',
          'device': '/cpu:0'
          }
 net = inference.net(options)

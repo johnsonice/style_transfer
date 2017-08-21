@@ -47,10 +47,10 @@ styles = ['hayao_miyazaki_totoro','transverse_line','robotech','super_saiyan','w
 'sketch','woman-with-hat-matisse']
 weights = [8e0]
 ## need to ge further trained ['transverse_line','robotech']
-## weights = [8e0,15e0,25e0]
+## weights = [8e0,15e0,30e0]
 for s in styles:
     for w in weights:
         options.style = 'style_net/examples/style/' + s + '.jpg'
-        options.model_name = s + '.ckpt'
+        options.model_name = s+str(w) + '.ckpt'
         options.content_weight = w
         style.train(options)
