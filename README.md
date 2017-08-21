@@ -17,9 +17,27 @@ rm style_model.tar.gz
 #### Some results 
 <p align = 'center'>
 
-<img src="result_samples/2.jpg" height=150>
-<img src="result_samples/2_tl.jpg" height=150>
-<img src="result_samples/2_wave.jpg" height=150>
+<img src="result_samples/2.jpg" height=170>
+<img src="result_samples/2_tl.jpg" height=170>
+<img src="result_samples/2_wave.jpg" height=170>
+</p>
+<p align = 'center'>
+
+<img src="result_samples/car.jpg" height=170>
+<img src="result_samples/car_screem.jpg" height=170>
+<img src="result_samples/car_wave.jpg" height=170>
+</p>
+<p align = 'center'>
+
+<img src="result_samples/5.jpg" height=170>
+<img src="result_samples/5_screem.jpg" height=170>
+<img src="result_samples/5_wave.jpg" height=170>
+</p>
+<p align = 'center'>
+
+<img src="result_samples/1.jpg" height=170>
+<img src="result_samples/1_totoro.jpg" height=170>
+<img src="result_samples/1_wave.jpg" height=170>
 </p>
 
 ### high level api
