@@ -16,8 +16,14 @@ import os
 ### inference ##
 ################
 
+<<<<<<< HEAD
 options = {'checkpoint': 'style_net/training_model/transverse_line30.0.ckpt',
          'device': '/cpu:0'
+=======
+options = {'checkpoint': 'style_net/model/udnie.ckpt',
+         'device': '/cpu:0',
+         'max_size': 1560
+>>>>>>> cfaec48749595b98f2276651a6cfc6831561a160
          }
 net = inference.net(options)
 #%%
@@ -27,7 +33,7 @@ imgs = [f for f in os.listdir(imgs_path)]
 
 #img = 'style_net/examples/content/content6.jpg'
 for f in imgs:
-    result = net.predict(os.path.join(imgs_path,f))
+    result = net.predict(os.path.join(imgs_path,f),options['max_size'])
     #plt.imshow(result)
     net.save(os.path.join(out_path,f),result)
 

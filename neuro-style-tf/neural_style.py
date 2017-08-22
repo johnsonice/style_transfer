@@ -4,9 +4,11 @@ import time
 import cv2
 import os
 
-from .src.util import maybe_make_directory,write_image,write_video_output,read_image,check_image,preprocess,postprocess,read_flow_file,read_weights_file
-from .src.vgg19 import build_model
+from src.util import maybe_make_directory,write_image,read_image,check_image,preprocess,postprocess,read_flow_file,read_weights_file,normalize
+from src.vgg19 import build_model
 
+
+#%%
 '''
   'a neural algorithm for artistic style' loss functions
 '''
@@ -96,9 +98,11 @@ def sum_content_losses(sess, net, content_img):
   content_loss /= float(len(args.content_layers))
   return content_loss
 
+#############################################################################################
 '''
   rendering -- where the magic happens
 '''
+#############################################################################################
 def stylize(content_img, style_imgs, init_img, frame=None):
   with tf.device(args.device), tf.Session() as sess:
     # setup network
@@ -176,6 +180,11 @@ def get_optimizer(loss):
     optimizer = tf.train.AdamOptimizer(args.learning_rate)
   return optimizer
 
+def write_video_output(frame, output_img):
+  fn = args.content_frame_frmt.format(str(frame).zfill(4))
+  path = os.path.join(args.video_output_dir, fn)
+  write_image(path, output_img)
+  
 def write_image_output(output_img, content_img, style_imgs, init_img):
   out_dir = os.path.join(args.img_output_dir, args.img_name)
   maybe_make_directory(out_dir)
@@ -191,7 +200,7 @@ def write_image_output(output_img, content_img, style_imgs, init_img):
     path = os.path.join(out_dir, 'style_'+str(index)+'.png')
     write_image(path, style_img)
     index += 1
-  
+    
   # save the configuration settings
   out_file = os.path.join(out_dir, 'meta_data.txt')
   f = open(out_file, 'w')
@@ -257,7 +266,8 @@ def get_content_image(content_img):
   if w > mx:
     h = (float(mx) / float(w)) * h
     img = cv2.resize(img, dsize=(mx, int(h)), interpolation=cv2.INTER_AREA)
-  img = preprocess(img)
+  img = preprocess(img) ## de - mean the image 
+  
   return img
 
 def get_style_images(content_img):
@@ -367,28 +377,6 @@ def render_single_image():
     tock = time.time()
     print('Single image elapsed time: {}'.format(tock - tick))
 
-def render_video():
-  for frame in range(args.start_frame, args.end_frame+1):
-    with tf.Graph().as_default():
-      print('\n---- RENDERING VIDEO FRAME: {}/{} ----\n'.format(frame, args.end_frame))
-      if frame == 1:
-        content_frame = get_content_frame(frame)
-        style_imgs = get_style_images(content_frame)
-        init_img = get_init_image(args.first_frame_type, content_frame, style_imgs, frame)
-        args.max_iterations = args.first_frame_iterations
-        tick = time.time()
-        stylize(content_frame, style_imgs, init_img, frame)
-        tock = time.time()
-        print('Frame {} elapsed time: {}'.format(frame, tock - tick))
-      else:
-        content_frame = get_content_frame(frame)
-        style_imgs = get_style_images(content_frame)
-        init_img = get_init_image(args.init_frame_type, content_frame, style_imgs, frame)
-        args.max_iterations = args.frame_iterations
-        tick = time.time()
-        stylize(content_frame, style_imgs, init_img, frame)
-        tock = time.time()
-        print('Frame {} elapsed time: {}'.format(frame, tock - tick))
 
 class args_obj(object):
     """
@@ -397,19 +385,20 @@ class args_obj(object):
     def __init__(self,dictionary):
         for key,val in dictionary.items():
             setattr(self,key,val)
-
+#%%
 def default_args():
-    arg={
+    args={
             'verbose':True,
+            'style_mask':False,
             'model_weights':'imagenet-vgg-verydeep-19.mat',
             'image_name':'testing.jpg',
-            'style_imgs':'style.jpg',
+            'style_imgs':['starry-night.jpg'],
             'img_output_dir':'./image_output',
             'style_imgs_weights':[1.0],
-            'content_img':'testing1.jpg',
+            'content_img':'face.jpg',
             'style_imgs_dir':'./styles',
             'content_img_dir':'./image_input',  ## default
-            'init_img_tyle':'content',          ## default 
+            'init_img_type':'content',          ## default  ['random', 'content', 'style']
             'max_size':512,                   ## default is 512 
             'content_weight':5e0,               ## default
             'style_weight':1e4,                 ## default 
@@ -417,7 +406,7 @@ def default_args():
             'content_loss_function':1,          ## choice 1, 2, 3
             'content_layers':['conv4_2'],       ## default
             'style_layers': ['relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1'],   ## default
-            'content_layer_weight':[1.0],       ## default
+            'content_layer_weights':[1.0],       ## default
             'style_layer_weights':[0.2,0.2,0.2,0.2,0.2],        ## default 
             'original_colors':False,            ## True or False, if keep original color
             'color_convert_tyle': 'yuv',        ## choice ['yuv', 'ycrcb', 'luv', 'lab'] Color space for conversion to original colors
@@ -425,23 +414,39 @@ def default_args():
             'noise_ratio':1.0,                  ## default: "Interpolation value between the content image and noise image if the network is initialized with 'random'.")
             'seed':0,                           ## default 
             'pooling_tyle':'avg',               ## max pooling or avg pooling 
-            'device':'/gpu:0',                  ## or '/cpu:0'
+            'device':'/cpu:0',                  ## or '/cpu:0'
             'optimizer': 'lbfgs',               ## or adam 
             'learning_rate':1e0,                ## default learning rate for adam 
             'max_iterations':1000,              ## default 
-            'print_iterations': 50,             
+            'print_iterations': 10,
+            'videoo' :False,   
+            'video_output_dir':'./video_output',
+            'content_frame_frmt':'frame_{}.ppm'
             }
     arg = args_obj(args)
-      
+    
+    arg.style_layer_weights   = normalize(arg.style_layer_weights)
+    arg.content_layer_weights = normalize(arg.content_layer_weights)
+    arg.style_imgs_weights    = normalize(arg.style_imgs_weights)
+    
     return arg 
 #%%
-def main():
-  global args
-  args = default_args()
-  #render_single_image()
-
-if __name__ == '__main__':
-  main()
+#def main():
+global args
+args = default_args()
+#render_single_image()
+content_img = get_content_image(args.content_img)  ## one 4 d image 
+style_imgs = get_style_images(content_img)  ## a list of style images 
+with tf.Graph().as_default():
+    print('\n---- RENDERING SINGLE IMAGE ----\n')
+    init_img = get_init_image(args.init_img_type, content_img, style_imgs)
+    tick = time.time()
+    stylize(content_img, style_imgs, init_img)
+    tock = time.time()
+    print('Single image elapsed time: {}'.format(tock - tick))  
+  
+#if __name__ == '__main__':
+#  main()
   
 #%%
 
