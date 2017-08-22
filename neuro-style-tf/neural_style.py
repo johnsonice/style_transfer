@@ -7,6 +7,8 @@ import os
 from src.util import maybe_make_directory,write_image,read_image,check_image,preprocess,postprocess,read_flow_file,read_weights_file,normalize
 from src.vgg19 import build_model
 
+
+#%%
 '''
   'a neural algorithm for artistic style' loss functions
 '''
@@ -416,7 +418,7 @@ def default_args():
             'optimizer': 'lbfgs',               ## or adam 
             'learning_rate':1e0,                ## default learning rate for adam 
             'max_iterations':1000,              ## default 
-            'print_iterations': 1,
+            'print_iterations': 10,
             'videoo' :False,   
             'video_output_dir':'./video_output',
             'content_frame_frmt':'frame_{}.ppm'
