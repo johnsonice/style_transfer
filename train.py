@@ -46,7 +46,7 @@ options = args(options_dict)
 #styles = ['hayao_miyazaki_totoro','transverse_line','robotech','super_saiyan','western_dream',
 #'sketch','woman-with-hat-matisse']
 #weights = [8e0]
-styles = ['transverse_line','daryl_feril','slam_dunk','robotech']
+styles = ['daryl_feril','slam_dunk','robotech']
 weights = [15e0,30e0]
 for s in styles:
     for w in weights:

@@ -7,6 +7,8 @@ import os
 from src.util import maybe_make_directory,write_image,read_image,check_image,preprocess,postprocess,read_flow_file,read_weights_file,normalize
 from src.vgg19 import build_model
 
+
+#%%
 '''
   'a neural algorithm for artistic style' loss functions
 '''
@@ -433,17 +435,8 @@ def default_args():
 #def main():
 global args
 args = default_args()
-#render_single_image()
-content_img = get_content_image(args.content_img)  ## one 4 d image 
-style_imgs = get_style_images(content_img)  ## a list of style images 
-with tf.Graph().as_default():
-    print('\n---- RENDERING SINGLE IMAGE ----\n')
-    init_img = get_init_image(args.init_img_type, content_img, style_imgs)
-    tick = time.time()
-    stylize(content_img, style_imgs, init_img)
-    tock = time.time()
-    print('Single image elapsed time: {}'.format(tock - tick))  
-  
+render_single_image()
+
 #if __name__ == '__main__':
 #  main()
   

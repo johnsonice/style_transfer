@@ -4,6 +4,15 @@ all different ways of style transfer
 
 #### style_net borrowed a lot code from https://github.com/lengstrom/fast-style-transfer
 
+### set up environment 
+
+```
+conda create -n style_transfer python=3.5
+conda install scipy
+## install the correct version of tensorflow 
+pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.3.0-py3-none-any.whl
+pip install Pillow
+```
 
 ### download pretrained models 
 ```
