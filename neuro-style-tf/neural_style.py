@@ -386,10 +386,11 @@ class args_obj(object):
 #%%
 def default_args():
     args={
-            'verbose':True,
+            'verbose':False,
             'style_mask':False,
+            'style_mask_imgs':None,
             'model_weights':'imagenet-vgg-verydeep-19.mat',
-            'image_name':'testing.jpg',
+            'img_name':'testing.jpg',
             'style_imgs':['starry-night.jpg'],
             'img_output_dir':'./image_output',
             'style_imgs_weights':[1.0],
@@ -415,9 +416,9 @@ def default_args():
             'device':'/cpu:0',                  ## or '/cpu:0'
             'optimizer': 'lbfgs',               ## or adam 
             'learning_rate':1e0,                ## default learning rate for adam 
-            'max_iterations':1000,              ## default 
-            'print_iterations': 1,
-            'videoo' :False,   
+            'max_iterations':100,              ## default 
+            'print_iterations': 10,
+            'video' :False,   
             'video_output_dir':'./video_output',
             'content_frame_frmt':'frame_{}.ppm'
             }
