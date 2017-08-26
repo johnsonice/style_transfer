@@ -10,20 +10,19 @@ import numpy as np
 
 class default_args(object):
     def __init__(self):
-        self.verbose = True
-        self.pooling_type = 'max'
-        self.model_weights = 'imagenet-vgg-verydeep-19.mat'
+        self.verbose = False
+        self.pooling_type = 'avg'
 
 args = default_args()
 
 #### args is a global variable 
-def build_model(input_img):
+def build_model(input_img,model_weights):
   if args.verbose: print('\nBUILDING VGG-19 NETWORK')
   net = {}
   _, h, w, d     = input_img.shape
   
   if args.verbose: print('loading model weights...')
-  vgg_rawnet     = scipy.io.loadmat(args.model_weights)
+  vgg_rawnet     = scipy.io.loadmat(model_weights)
   vgg_layers     = vgg_rawnet['layers'][0]
   if args.verbose: print('constructing layers...')
   net['input']   = tf.Variable(np.zeros((1, h, w, d), dtype=np.float32))
