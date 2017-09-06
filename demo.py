@@ -16,14 +16,11 @@ import os
 ### inference ##
 ################
 
-<<<<<<< HEAD
-options = {'checkpoint': 'style_net/training_model/transverse_line30.0.ckpt',
-         'device': '/cpu:0'
-=======
-options = {'checkpoint': 'style_net/model/udnie.ckpt',
-         'device': '/cpu:0',
-         'max_size': 1560
->>>>>>> cfaec48749595b98f2276651a6cfc6831561a160
+options = {
+        'checkpoint': 'style_net/model/starry-night.ckpt',
+        'device': '/cpu:0',
+        'gpu_memory': 0.0,
+        'max_size': 1080
          }
 net = inference.net(options)
 #%%

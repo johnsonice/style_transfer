@@ -13,6 +13,7 @@ class net(object):
         
         self.model = options['checkpoint']
         self.device = options['device']
+        self.gpu_memory = options['gpu_memory']
         
         print('loading style net')
         self.sess,self.in_node,self.out_node = self.load(self.model,self.device)
@@ -23,7 +24,10 @@ class net(object):
         g = tf.Graph()
         # initiate a session 
         soft_config = tf.ConfigProto(allow_soft_placement=True)
-        soft_config.gpu_options.allow_growth = True
+        if self.gpu_memory > 0.0:
+            soft_config.gpu_options.per_process_gpu_memory_fraction = self.gpu_memory
+        else:
+            soft_config.gpu_options.allow_growth = True
         sess = tf.Session(graph = g, config=soft_config)
         
         with g.as_default(), g.device(device_t):

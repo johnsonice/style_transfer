@@ -8,7 +8,7 @@ Created on Sat Aug 26 15:46:58 2017
 from style_net_single import neural_style as sns
 #%%
 options= {
-        'max_iterations':20,
+        'max_iterations':200,
         'device':'/cpu:0',
         'model_weights':'./style_net_single/imagenet-vgg-verydeep-19.mat',
         'style_imgs_weights':[1.0],
@@ -19,7 +19,10 @@ options= {
         'init_img_type':'content',          ## default  ['random', 'content', 'style']
         'img_output_dir':'./style_net_single/image_output',
         'img_name':'testing.jpg',
-        'print_iterations': 5               ## print every 5 iteration for test 
+        'print_iterations':5,               ## print every 5 iteration for test 
+        'content_weight':5e0,               ## default
+        'style_weight':1e4,                 ## default 
+        'tv_weight':1e-3,                   ## default
           }
 stylenet = sns.net(options)
 #%%
