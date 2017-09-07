@@ -17,9 +17,9 @@ import os
 ################
 
 options = {
-        'checkpoint': 'style_net/model/starry-night.ckpt',
-        'device': '/cpu:0',
-        'gpu_memory': 0.0,
+        'checkpoint': 'style_net/training_model/super_saiyan.ckpt',
+        'device': '/gpu:0',
+        'gpu_memory': 0.1,
         'max_size': 1080
          }
 net = inference.net(options)
