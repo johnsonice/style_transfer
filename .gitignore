@@ -5,6 +5,7 @@ __pycache__/
 *data/
 *bin/
 *model/
+*.ckpt
 
 *.py[cod]
 *$py.class
