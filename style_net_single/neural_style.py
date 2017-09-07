@@ -395,7 +395,7 @@ class net(object):
         args={
                 'verbose':True,
                 'style_mask':False,
-                'style_mask_imgs':None,
+                'style_mask_imgs':None,            ## a list of masks 
                 'model_weights':'imagenet-vgg-verydeep-19.mat',
                 'img_name':'testing.jpg',
                 'style_imgs':['starry-night.jpg'],
