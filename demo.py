@@ -17,9 +17,9 @@ import os
 ################
 
 options = {
-        'checkpoint': 'style_net/training_model/super_saiyan.ckpt',
-        'device': '/gpu:0',
-        'gpu_memory': 0.1,
+        'checkpoint': 'style_net/model/starry-night.ckpt',
+        'device': '/cpu:0',
+        'gpu_memory': 0.0,
         'max_size': 1080
          }
 net = inference.net(options)
@@ -29,7 +29,7 @@ out_path = 'style_net/examples/results'
 imgs = [f for f in os.listdir(imgs_path)]
 
 #img = 'style_net/examples/content/content6.jpg'
-for f in imgs:
+for f in imgs[:2]:
     result = net.predict(os.path.join(imgs_path,f),options['max_size'])
     #plt.imshow(result)
     net.save(os.path.join(out_path,f),result)

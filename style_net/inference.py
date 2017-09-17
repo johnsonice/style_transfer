@@ -27,7 +27,8 @@ class net(object):
         if self.gpu_memory > 0.0:
             soft_config.gpu_options.per_process_gpu_memory_fraction = self.gpu_memory
         else:
-            soft_config.gpu_options.allow_growth = True
+            #soft_config.gpu_options.allow_growth = True
+            pass
         sess = tf.Session(graph = g, config=soft_config)
         
         with g.as_default(), g.device(device_t):
